@@ -14,15 +14,6 @@ kruskal.test(Length ~ Sheet, data = all_data)
 
 lengthonly = subset(all_data, select = -c(Area, Mean, Angle) )
 
-# Create a boxplot
-ggplot(all_data, aes(x = Sheet, y = Length)) +
-  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +
-  theme_minimal() +
-  labs(title = "Boxplot of Length by Sheet",
-       x = "Osculum And Recording",
-       y = "Length") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
-
 # Reorder levels of Sheet
 lengthonly$Sheet <- factor(lengthonly$Sheet, levels = c(
   paste0("osc1_rec", 1:11),
@@ -40,9 +31,6 @@ ggplot(lengthonly, aes(x = Sheet, y = Length)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-
-# Verify the order
-levels(lengthonly$Sheet)
 
 # LMERs
 lmm <- lmer(Length ~ Sheet + (1 | Camera), data = lengthonly)

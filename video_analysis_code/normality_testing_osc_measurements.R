@@ -8,7 +8,7 @@ library(car)
 # COMBINE TO ONE DATASHEET -------------------------------------------------
 
 # Set your folder path
-folder_path <- "datasheets"
+folder_path <- "datasheets"  # this will now be different as path changed. 
 
 # Check the files in the folder
 list.files(folder_path)
