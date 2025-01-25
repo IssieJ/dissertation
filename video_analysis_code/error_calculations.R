@@ -5,10 +5,11 @@ library(tidyverse)
 # combine all datasets into "all_repeats"
 
 # set wd
-setwd("C:/Users/issie/OneDrive - University of Edinburgh/uni year 4/dissertation/measurements_2")
+setwd("C:/Users/issie/OneDrive - University of Edinburgh/uni year 4/dissertation")
 
-# Read the repeated measurements
-repeat_data <- read_csv("all_repeats.csv") # Adjust to your file name
+# import repeat data and original data
+
+repeat_data <- all_repeats
 
 # original means from FULL dataset
 original_means <- all_data %>%
