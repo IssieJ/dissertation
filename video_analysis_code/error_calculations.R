@@ -40,7 +40,7 @@ plot_data <- original_means %>%
 ggplot(plot_data, aes(x = factor(Camera), y = mean_length, group = Osculum)) +
   geom_line(aes(color = factor(Osculum))) +
   geom_point(aes(color = factor(Osculum))) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "blue", alpha = 0.2) +
+  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "darkgrey", alpha = 0.2) +
   labs(
     title = "Oscula Length with Margin of Error",
     x = "Camera",
