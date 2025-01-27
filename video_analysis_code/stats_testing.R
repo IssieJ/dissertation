@@ -9,6 +9,7 @@ result <- aov(Length ~ Sheet, data = all_data)
 summary(result)
 
 # kruskal wallis test
+kruskal.test(Length ~ Osculum_Camera, data = all_data)
 kruskal.test(Length ~ Sheet, data = all_data)
 
 

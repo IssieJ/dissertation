@@ -6,9 +6,9 @@ library(readxl)
 library(car)
 
 # COMBINE TO ONE DATASHEET -------------------------------------------------
-
+getwd()
 # Set your folder path
-folder_path <- "datasheets"  # this will now be different as path changed. 
+folder_path <- "video_datasheets"  # this will now be different as path changed. 
 
 # Check the files in the folder
 list.files(folder_path)
@@ -36,7 +36,7 @@ head(combined_data)
 # Check the structure
 str(combined_data)
 
-write.csv(combined_data, "combined_data.csv", row.names = FALSE)
+# write.csv(combined_data, "combined_data.csv", row.names = FALSE)
 
 
 # START NORMALITY TESTING ---------------------------------------------------
@@ -53,7 +53,7 @@ normality_results <- all_data %>%
   summarise(p_value = shapiro.test(Length)$p.value)
 
 
-leveneTest(Length ~ Sheet, data = all_data)
+leveneTest(Length ~ Osculum_Camera, data = all_data)
 
 
 # View results
