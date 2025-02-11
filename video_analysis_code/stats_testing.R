@@ -1,36 +1,42 @@
+
 ## STATISICAL ANALYSIS 
 
 # testing to see if there is a change in osculum size
+install.packages("FSA")
 library(lme4)
 library(tidyverse)
+library(FSA)
+library(car)
 
-# anova
-result <- aov(Length ~ Sheet, data = all_data)
-summary(result)
+# checking homoscedasticity 
+all_data$Osculum <- as.factor(all_data$Osculum)
+all_data$Camera <- as.factor(all_data$Camera)
+
+leveneTest(log_length ~ Osculum * Camera, data = all_data)
+# variances are very different - need to be the same for anova. 
+
+# anova - can't use - too many assumptions violated. 
+anova1 <- aov(log_length ~ Osculum + Camera, data = all_data)
+summary(anova1)
+
+# check distributions
+qqnorm(residuals(anova1))
+qqline(residuals(anova1), col = "red")
 
 # kruskal wallis test
-kruskal.test(Length ~ Osculum_Camera, data = all_data)
-kruskal.test(Length ~ Sheet, data = all_data)
+kruskal.test(log_length ~ interaction(Osculum, Camera), data = all_data)
 
+# effect size test to tell how strong the difference is
 
-lengthonly = subset(all_data, select = -c(Area, Mean, Angle) )
+kruskal_effsize <- function(stat, n, df) {
+  eta_squared <- stat / (n - 1)
+  return(eta_squared)
+}
 
-# Reorder levels of Sheet
-lengthonly$Sheet <- factor(lengthonly$Sheet, levels = c(
-  paste0("osc1_rec", 1:11),
-  paste0("osc2_rec", 1:11),
-  paste0("osc3_rec", 1:11)
-))
+kruskal_effsize(4371, 5494, 17)  # Using your test's chi-squared, sample size, and df
+# large effect size - close to 1 is larger 
+# this is = 0.796
 
-
-# Create the boxplot with reordered levels
-ggplot(lengthonly, aes(x = Sheet, y = Length)) +
-  geom_boxplot(outlier.colour = "red") +
-  labs(title = "Boxplot of Length by Sheet",
-       x = "Osculum And Recording",
-       y = "Length") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 # LMERs
@@ -50,4 +56,5 @@ vcov(lmm2, correlation = TRUE)
 # Residual plot
 plot(resid(lmm), main = "Residuals of the Model")
 plot(resid(lmm2), main ="Residuals of the Model")
+
 

@@ -42,8 +42,18 @@ ggplot(plot_data, aes(x = factor(Camera), y = mean_length, group = Osculum)) +
   geom_point(aes(color = factor(Osculum))) +
   geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "darkgrey", alpha = 0.2) +
   labs(
-    title = "Oscula Length with Margin of Error",
     x = "Camera",
-    y = "Mean Oscula Length"
+    y = "Mean Oscula Length", 
   ) +
-  theme_minimal()
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.key = element_blank(),  
+    legend.background = element_rect(fill = NA),  
+    legend.title = element_text("Osculum"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fill = "white"),
+    axis.line = element_line(colour = "black")
+  )
+  

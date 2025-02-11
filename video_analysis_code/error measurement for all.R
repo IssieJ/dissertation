@@ -10,7 +10,7 @@ original_means <- all_data %>%
 
 # Merge the repeated measurements with the original dataset
 paired_data <- original_means %>%
-  inner_join(repeat_data, by = c("Camera", "Osculum"))
+  inner_join(all_repeats, by = c("Camera", "Osculum"))
 
 # Calculate absolute differences (errors)
 paired_data <- paired_data %>%
@@ -59,7 +59,7 @@ ggplot(all_data, aes(x = interaction(Osculum, Camera), y = Length, color = facto
     size = 1.2,
     color = "black"
   ) +
-  scale_color_brewer(palette = "Set1") +
+  scale_color_brewer(palette = "Dark2") +
   labs(
     x = "Osculum and Camera",
     y = "Length",

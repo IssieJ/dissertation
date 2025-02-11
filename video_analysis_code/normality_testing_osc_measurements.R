@@ -1,6 +1,7 @@
 ## NORMALITY TESTING ON OSCULUM SIZE CHANGE MEASUREMENTS
 
-
+install.packages("nortest")
+library(nortest)
 library(tidyverse)
 library(readxl)
 library(car)
@@ -52,9 +53,10 @@ normality_results <- all_data %>%
   group_by(Osculum, Camera) %>%
   summarise(p_value = shapiro.test(Length)$p.value)
 
+# save normality results
+write_excel_csv(normality_results, "normalityresults.csv")
 
-leveneTest(Length ~ Osculum_Camera, data = all_data)
-
+leveneTest(Length~Sheet, data = all_data)
 
 # View results
 print(normality_results)
@@ -64,7 +66,7 @@ ggplot(all_data, aes(x = Length)) +
   geom_histogram(bins = 30, fill = "blue", color = "black") +
   facet_grid(Osculum ~ Camera) +  # Create a grid of histograms for each osculum and camera
   theme_minimal() +
-  labs(title = "Histograms of Length by Osculum and Camera", x = "Length", y = "Frequency")
+  labs(x = "Length", y = "Frequency")
 
 # create q-q plots
 ggplot(all_data, aes(sample = Length)) +
@@ -72,4 +74,40 @@ ggplot(all_data, aes(sample = Length)) +
   stat_qq_line() +
   facet_grid(Osculum ~ Camera) +
   theme_minimal() +
-  labs(title = "Q-Q Plots of Length by Osculum and Camera")
+  labs()
+
+# log transform
+all_data$log_length <- log(all_data$Length)
+
+# histogram single 
+hist(all_data$log_length, col = "blue", main = "Histogram of Log-Transformed Length")
+
+# histogram all
+ggplot(all_data, aes(x = log_length, fill = Camera)) +
+  geom_histogram(bins = 30, fill = "blue", color = "black") +
+  facet_grid(Osculum ~ Camera) +  
+  labs(x = "Length", y = "Frequency") +
+  theme_minimal() +
+    theme(
+      panel.grid.major = element_blank(),  
+      panel.grid.minor = element_blank(), 
+      axis.line = element_line(colour = "black")
+  )
+  
+# qq plot
+qqnorm(all_data$log_length)
+qqline(all_data$log_length, col = "red")
+
+# KS test 
+ks.test(all_data$log_length, "pnorm", mean = mean(all_data$log_length), sd = sd(all_data$log_length))
+# not normal but violates assumptions
+
+# shapiro wilks test on logged data
+normality_results_logged <- all_data %>%
+  group_by(Osculum, Camera) %>%
+  filter(n() >= 3) %>%  # Remove groups with fewer than 3 observations
+  summarise(p_value = shapiro.test(Logged_Length)$p.value, .groups = "drop")
+
+# anderson darling test
+ad.test(all_data$log_length)
+# not normal. 
