@@ -5,6 +5,7 @@ library(tidyverse)
 library(lme4)
 library(glmmTMB)
 library(betareg)
+library(stargazer)
 
 # GLM MODELS WITH BETA DISTRIBUTION
 
@@ -22,6 +23,9 @@ all_data_quadrats$total_percent_sponge_cover <-
 sponge_model <- betareg(total_percent_sponge_cover ~ zone, 
                           data = all_data_quadrats)
 summary(sponge_model)
+
+# create table
+stargazer(sponge_model, type = "text")  # Replace 'model' with your beta regression model
 
 # VEGETATION COVER
 # model 2
