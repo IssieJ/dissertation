@@ -12,10 +12,10 @@ head(all_data_quadrats)
 view(all_data_quadrats)
 
 # make zone and section a factor
-all_data_quadrats$zone <- as.factor(all_data_quadrats$zone)
+#all_data_quadrats$zone <- as.factor(all_data_quadrats$zone)
 
 # Convert percent sponge cover data to proportions (0-1) from percentages (0-100)
-all_data_quadrats$total_percent_sponge_cover <- all_data_quadrats$total_percent_sponge_cover / 100
+#all_data_quadrats$total_percent_sponge_cover <- all_data_quadrats$total_percent_sponge_cover*100
 
 
 # Summarising data by zone - creating mean values
@@ -50,9 +50,10 @@ ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = 
 
 
 # total veg cover
-ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
+ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = zone)) +
   geom_jitter(width = 0.3, size = 2) +
   theme_minimal() +
+  ylim(0,80) +
   labs(
     x = "Zone",
     y = "Percent Vegetation Cover")+
@@ -64,7 +65,7 @@ ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
     legend.background = element_rect(fill = "white"),
     axis.line = element_line(colour = "black")
   )
-  )
+
 
 # ------------------------------------------
 # note on the outlier in middle -  

@@ -56,4 +56,54 @@ ggplot(plot_data, aes(x = factor(Camera), y = mean_length, group = Osculum)) +
     plot.background = element_rect(fill = "white"),
     axis.line = element_line(colour = "black")
   )
+
+
+# plot onto new graph
+
+# new graph no error
+ggplot(all_data, aes(x = Sequence_Index, y = Length, 
+                     group = interaction(Camera, Osculum), color = factor(Osculum))) +
+  geom_line(alpha = 0.7) +  
+  facet_wrap(~ Camera, scales = "free_x") +  
+  labs(x = "Measurement Index (Continuous)", y = "Osculum Length", color = "Osculum") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.key = element_blank(),  
+    legend.background = element_rect(fill = NA),  
+    legend.title = element_text("Osculum"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fill = "white"),
+    axis.line = element_line(colour = "black")
+  )
+
+
+# Plot with error shading
+plot_data <- all_data %>%
+  mutate(
+    lower_bound = Length - margin_of_error,
+    upper_bound = Length + margin_of_error
+  )
+
+
+# Plot with error shading
+ggplot(plot_data, aes(x = Sequence_Index, y = Length, 
+                      group = interaction(Camera, Osculum), color = factor(Osculum))) +
+  geom_line(alpha = 0.7) +  
+  facet_wrap(~ Camera, scales = "free_x") +  
+  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "darkgrey", alpha = 0.2) +  
+  labs(x = "Measurement Index (Continuous)", y = "Osculum Length", color = "Osculum") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.key = element_blank(),  
+    legend.background = element_rect(fill = NA),  
+    legend.title = element_text("Osculum"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "white"),
+    plot.background = element_rect(fill = "white"),
+    axis.line = element_line(colour = "black")
+  )
+  
   
