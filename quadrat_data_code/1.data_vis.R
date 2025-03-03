@@ -29,31 +29,29 @@ groupedzone <- all_data_quadrats %>%
 
 # create graphs
 
-# total sponge cover (%)
+# total sponge cover
 ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = zone)) +
   geom_jitter(width = 0.3, size = 2) +
-  ylim(0, 0.5) +
+  theme_minimal() +
+  ylim(0,80) +
   labs(
     x = "Zone",
-    y = "Total Percent Sponge Cover"
-  ) + 
+    y = "Percent Sponge Cover")+
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid.major = element_blank(),  
     panel.grid.minor = element_blank(),  
     panel.border = element_blank(),  
     legend.background = element_rect(fill = "white"),
-    panel.background = element_rect(fill = "white", color = NA),  # White background
-    plot.background = element_rect(fill = "white", color = NA),  # White outer background
     axis.line = element_line(colour = "black")
   )
 
 
 # total veg cover
-ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = zone)) +
+ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
   geom_jitter(width = 0.3, size = 2) +
   theme_minimal() +
-  ylim(0,80) +
+  ylim(0,100) +
   labs(
     x = "Zone",
     y = "Percent Vegetation Cover")+

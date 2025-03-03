@@ -15,8 +15,8 @@ all_data_quadrats %>%
 ggplot(all_data_quadrats, aes(x = percent_cover_veg, y = total_percent_sponge_cover, color = zone)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() +
-  ylim(0,0.5) +
+  ylim(0,80) +
+  xlim(0,100) +
   labs(x = "Vegetation Cover",
        y = "Sponge Cover") +
   theme(
