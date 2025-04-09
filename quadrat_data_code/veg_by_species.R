@@ -1,9 +1,13 @@
-## correlation between sponges and vegetation by species
+# PLOTTING VEGETATION BY SPECIES
+# January 2025
 
+# Import required libraries
 library(tidyverse)
+library(readxl)
 
-# Load data
-View(data_with_veg_id)
+# Import data
+all_data_quadrats <- read_excel("quadrat_data_sheets/all_data_quadrats.xlsx")
+View(all_data_quadrats)
 
 # Expand species list into long format
 species_long <- all_data_quadrats %>%
@@ -28,7 +32,7 @@ species_by_zone <- species_long %>%
 print(species_by_zone)
 
 
-#plot tidy graph
+#plot graph
 
 ggplot(species_long, aes(x = species_name, fill = zone)) +
   geom_bar(position = "dodge", width = 0.7) +
@@ -46,16 +50,3 @@ ggplot(species_long, aes(x = species_name, fill = zone)) +
   labs(x = "Species", y = "Frequency", fill = "Zone")
 
 ggsave("veg_by_species.png", width = 8, height = 5, dpi = 300)
-
-# run a regression
-
-species_wide$sponge_presence <- ifelse(species_wide$total_percent_sponge_cover > 0, 1, 0)
-
-logit_model <- glm(sponge_presence ~ ., data = species_wide[, c("sponge_presence", names(species_wide)[8:ncol(species_wide)])], family = "binomial")
-summary(logit_model)
-
-
-table(species_wide$sponge_presence, species_wide$`fucus vesiculosus`)
-table(species_wide$sponge_presence, species_wide$`ascophyllum nodosum`)
-
-
