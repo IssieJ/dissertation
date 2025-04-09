@@ -11,8 +11,8 @@ Distribution of _Halichondria panicea_ on the intertidal shore was assessed, alo
 Also investigated was the contraction-expansion dynamics of this sponge, the occurrence of these events, and the possible triggers. 
 
 
-- [Quadrat Data Code] (https://github.com/IssieJ/dissertation/tree/main/quadrat_data_code)
-- [Video Data Code] (https://github.com/IssieJ/dissertation/tree/main/video_analysis_code)
+- [Quadrat Data Code](https://github.com/IssieJ/dissertation/tree/main/quadrat_data_code)
+- [Video Data Code](https://github.com/IssieJ/dissertation/tree/main/video_analysis_code)
 
 
 This Github repository contains all the code files used to create the models and graphs in the dissertation, submitted in April 2025. 
