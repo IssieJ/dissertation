@@ -6,6 +6,7 @@
 # import required libraries
 library(tidyverse)
 
+
 # view data
 
 head(all_data_quadrats)
@@ -55,6 +56,25 @@ ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
   labs(
     x = "Zone",
     y = "Percent Vegetation Cover")+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.major = element_blank(),  
+    panel.grid.minor = element_blank(),  
+    panel.border = element_blank(),  
+    legend.background = element_rect(fill = "white"),
+    axis.line = element_line(colour = "black")
+  )
+
+# veg cover boxplot 
+ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, fill = zone)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.5) +  # Transparent boxes, hide outliers
+  geom_jitter(width = 0.2, size = 2, alpha = 0.4) +  # Add jittered points for visibility
+  theme_minimal() +
+  ylim(0, 100) +
+  labs(
+    x = "Zone",
+    y = "Percent Vegetation Cover"
+  ) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid.major = element_blank(),  

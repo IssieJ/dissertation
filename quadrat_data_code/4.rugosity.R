@@ -37,5 +37,6 @@ shapiro.test(residuals(anova_rugosity))
 # w=0.95231 p-value=0.7154 - W close to 1 and p-value insignificant 
 # = normal distribution
 
+leveneTest(rugosity_index ~ zone, data = rugosity)
 # box plot shows some variation but ANOVA insignificant. 
 

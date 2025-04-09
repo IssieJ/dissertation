@@ -27,52 +27,25 @@ species_by_zone <- species_long %>%
 
 print(species_by_zone)
 
-# plot the vegetation species across zones
-ggplot(species_by_zone, aes(x=species_name, y=Frequency, fill=zone)) +
-  geom_bar(stat="identity", position="dodge") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(x="Species", y="Frequency")
-
-# correlation matrix
-species_wide <- species_long %>%
-  pivot_wider(names_from = species_name, values_from = Presence, values_fill = 0)
-
-cor_results <- cor(species_wide[, c("total_percent_sponge_cover", names(species_wide)[8:ncol(species_wide)])], 
-                   use = "pairwise.complete.obs")
-
-print(cor_results)
-
-# save file
-write.csv(species_long, file = "species_long.csv", row.names = FALSE)
-
-# plot in wide format - better graph
-ggplot(species_long, aes(x = species_name, fill = zone)) +
-  geom_bar(position = "dodge") +  
-  theme_classic() +  
-  theme(
-    axis.line = element_line(colour = "black"),  
-    panel.grid.major = element_blank(),  
-    panel.grid.minor = element_blank(),  
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  ) +
-  labs(x = "Species", y = "Frequency", fill = "Zone")
 
 #plot tidy graph
-
-test_species <- species_long %>%
-  mutate(species_name = factor(species_name, levels = c(unique(species_name[species_name != "none"]), "none")))
 
 ggplot(species_long, aes(x = species_name, fill = zone)) +
   geom_bar(position = "dodge", width = 0.7) +
   theme_classic() +  
   theme(
+    axis.title.x = element_text(size = 10),  # X-axis label size
+    axis.title.y = element_text(size = 10),  # Y-axis label size
     axis.line = element_line(colour = "black"),  
     panel.grid.major = element_blank(),  
-    panel.grid.minor = element_blank(),  
-    axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Species", y = "Frequency", fill = "Zone") +
-  scale_x_discrete(limits = levels(test_species$species_name))
+    panel.grid.minor = element_blank(),
+    legend.text = element_text(size = 10),
+    legend.title = element_text(size = 10),
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    axis.text.y = element_text(size = 10)) +
+  labs(x = "Species", y = "Frequency", fill = "Zone")
 
+ggsave("veg_by_species.png", width = 8, height = 5, dpi = 300)
 
 # run a regression
 
