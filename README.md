@@ -12,7 +12,9 @@ Also investigated was the contraction-expansion dynamics of this sponge, the occ
 
 
 - [Quadrat Data Code] (https://github.com/IssieJ/dissertation/tree/main/quadrat_data_code)
-- [Video Data Code] (
+- [Video Data Code] (https://github.com/IssieJ/dissertation/tree/main/video_analysis_code)
+
+
 This Github repository contains all the code files used to create the models and graphs in the dissertation, submitted in April 2025. 
 
 All coding was done in RStudio, version 2024.04.2+764. 
