@@ -10,9 +10,10 @@ Summary:
 Distribution of _Halichondria panicea_ on the intertidal shore was assessed, along with the impact of environmental factors. 
 Also investigated was the contraction-expansion dynamics of this sponge, the occurrence of these events, and the possible triggers. 
 
-This Github repository contains all the code files used to create the models and graphs in the dissertation, submitted in April 2025. 
 
-**Table of Contents**
+- [Quadrat Data Code] (https://github.com/IssieJ/dissertation/tree/main/quadrat_data_code)
+- [Video Data Code] (
+This Github repository contains all the code files used to create the models and graphs in the dissertation, submitted in April 2025. 
 
 All coding was done in RStudio, version 2024.04.2+764. 
 All code is open access. 
