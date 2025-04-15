@@ -4,9 +4,11 @@
 # import required libraries
 library(tidyverse)
 library(readxl)
+library(RColorBrewer)
 
 # import data
 all_data_quadrats <- read_excel("quadrat_data_sheets/all_data_quadrats.xlsx")
+
 
 # view data
 head(all_data_quadrats)
@@ -24,11 +26,13 @@ groupedzone <- all_data_quadrats %>%
 # plot total sponge cover
 ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = zone)) +
   geom_jitter(width = 0.3, size = 2) +
+  scale_color_brewer(palette = "Dark2") +
   theme_minimal() +
-  ylim(0,80) +
+  ylim(0,60) +
   labs(
     x = "Zone",
-    y = "Percent Sponge Cover")+
+    y = "Percent Sponge Cover"
+  ) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid.major = element_blank(),  
@@ -41,6 +45,7 @@ ggplot(all_data_quadrats, aes(x = zone, y = total_percent_sponge_cover, color = 
 # plot total veg cover
 ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
   geom_jitter(width = 0.3, size = 2) +
+  scale_color_brewer(palette = "Dark2") +
   theme_minimal() +
   ylim(0,100) +
   labs(
@@ -57,8 +62,9 @@ ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, color = zone)) +
 
 # veg cover boxplot 
 ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, fill = zone)) +
-  geom_boxplot(outlier.shape = NA, alpha = 0.5) +  # Transparent boxes, hide outliers
-  geom_jitter(width = 0.2, size = 2, alpha = 0.4) +  # Add jittered points for visibility
+  geom_boxplot(outlier.shape = NA, alpha = 0.5) + 
+  geom_jitter(width = 0.2, size = 2, alpha = 0.4) +
+  scale_fill_brewer(palette = "Dark2") +  # <- this line adds the colorblind-friendly palette
   theme_minimal() +
   ylim(0, 100) +
   labs(
@@ -73,6 +79,7 @@ ggplot(all_data_quadrats, aes(x = zone, y = percent_cover_veg, fill = zone)) +
     legend.background = element_rect(fill = "white"),
     axis.line = element_line(colour = "black")
   )
+
 
 # ------------------------------------------
 # note on the outlier in middle -  

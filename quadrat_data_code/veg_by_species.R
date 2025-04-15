@@ -4,6 +4,7 @@
 # Import required libraries
 library(tidyverse)
 library(readxl)
+library(RColorBrewer)
 
 # Import data
 all_data_quadrats <- read_excel("quadrat_data_sheets/all_data_quadrats.xlsx")
@@ -31,22 +32,23 @@ species_by_zone <- species_long %>%
 
 print(species_by_zone)
 
-
 #plot graph
-
 ggplot(species_long, aes(x = species_name, fill = zone)) +
   geom_bar(position = "dodge", width = 0.7) +
+  scale_fill_brewer(palette = "Dark2") +  # colorblind-friendly
   theme_classic() +  
   theme(
-    axis.title.x = element_text(size = 10),  # X-axis label size
-    axis.title.y = element_text(size = 10),  # Y-axis label size
-    axis.line = element_line(colour = "black"),  
-    panel.grid.major = element_blank(),  
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.line = element_line(colour = "black"),
+    panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 10),
+    legend.background = element_rect(fill = "white", color = "black"),  # boxed legend
     axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-    axis.text.y = element_text(size = 10)) +
-  labs(x = "Species", y = "Frequency", fill = "Zone")
+    axis.text.y = element_text(size = 10)
+  ) +
+  labs(x = "Species", y = "Frequency", fill = "zone")
 
-ggsave("veg_by_species.png", width = 8, height = 5, dpi = 300)
+ggsave("veg_by_species.png", width = 10, height = 5, dpi = 100)

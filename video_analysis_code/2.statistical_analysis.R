@@ -8,6 +8,7 @@ library(tidyverse)
 library(car)
 library(mgcv)
 library(gratia)
+library(RColorBrewer)
 
 # make sure length data is log transformed
 all_data$log_length <- log(all_data$Length)
@@ -50,19 +51,23 @@ deriv_data <- all_data %>%
   ungroup()
 
 # Plot rate of change with no thresholds 
+
 ggplot(deriv_data, aes(x = ID, y = derivative, color = as.factor(Osculum))) +
   geom_line(linewidth = 0.4) +
   facet_grid(Osculum ~ Camera, scales = "free_x") + 
-  labs(y = "Change in Length per Measured Frame", 
-       x = "Measurement Number",
-       color = "Osculum") +
+  scale_color_brewer(palette = "Dark2") +  # colorblind-friendly
+  labs(
+    y = "Change in Length per Measured Frame", 
+    x = "Measurement Number",
+    color = "Osculum"  # legend title
+  ) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.key = element_blank(),  
-    legend.background = element_rect(fill = NA),  
-    legend.title = element_text("Osculum"),
+    legend.background = element_rect(fill = "white", color = "black"),  # boxed legend
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "white"),
     plot.background = element_rect(fill = "white"),
-    axis.line = element_line(colour = "black"))
+    axis.line = element_line(colour = "black")
+  )

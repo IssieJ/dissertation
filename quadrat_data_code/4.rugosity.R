@@ -5,9 +5,10 @@
 library(tidyverse)
 library(car)
 library(readxl)
+library(RColorBrewer)
 
 # import datasets
-rugosity <- read_excel("quadrat_data_sheets/rugosity.xlsx")
+rugosity <- read_excel("datasheets and graphs/quadrat_data_sheets/rugosity.xlsx")
 View(rugosity)
 
 # Summary of rugosity index by section and zone
@@ -19,13 +20,17 @@ aggregate(rugosity_index ~ section + zone, data = rugosity, FUN = mean)
 # Rugosity by zone
 ggplot(rugosity, aes(x = zone, y = rugosity_index, fill = zone)) +
   geom_boxplot() +
-  labs(x = "Zone", y = "Rugosity Index") +
+  scale_fill_brewer(palette = "Dark2") +  # colorblind-friendly
+  labs(
+    x = "Zone", 
+    y = "Rugosity Index",
+    fill = "zone"  # legend title
+  ) +
   scale_y_continuous(limits = c(1, 1.3)) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.key = element_blank(),  
-    legend.background = element_rect(fill = NA),  
-    legend.title = element_text("Osculum"),
+    legend.background = element_rect(fill = "white", color = "black"),  # legend box
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "white"),

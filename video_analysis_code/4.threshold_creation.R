@@ -55,7 +55,7 @@ ggplot(repeat_data, aes(x = rate_of_change_repeat)) +
 # Compute a robust threshold for rate of change - 9oth percentile
 rate_change_thresholds <- repeat_data %>%
   group_by(Camera, Osculum) %>%
-  summarise(rate_change_threshold = quantile(rate_of_change_repeat, 0.90, na.rm = TRUE), .groups = "drop") 
+  summarise(rate_change_threshold = quantile(rate_of_change_repeat, 0.70, na.rm = TRUE), .groups = "drop") 
 
 # deriv_data has incorrect col names - fix them
 deriv_data <- all_data %>%
@@ -78,22 +78,22 @@ deriv_data <- deriv_data %>%
 # Plot with new corrected thresholds
 ggplot(deriv_data, aes(x = ID, y = derivative, color = as.factor(Osculum))) +
   geom_line(linewidth = 0.4) +
-  
-  # Add corrected threshold lines
   geom_hline(aes(yintercept = upper_threshold), linetype = "dashed", size = 0.6, color = "black") +
   geom_hline(aes(yintercept = lower_threshold), linetype = "dashed", size = 0.6, color = "black") +
-  
   facet_grid(Osculum ~ Camera, scales = "free_x") +  
-  labs(y = "Change in Length per Measured Frame", 
-       x = "Measurement Number",
-       color = "Osculum") +
+  scale_color_brewer(palette = "Dark2") +  # colorblind-friendly
+  labs(
+    y = "Change in Length per Measured Frame", 
+    x = "Measurement Number",
+    color = "Osculum"
+  ) +
   theme(
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.key = element_blank(),  
-    legend.background = element_rect(fill = NA),  
-    legend.title = element_text("Osculum"),
+    legend.background = element_rect(fill = "white", color = "black"),  # boxed legend
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.background = element_rect(fill = "white"),
     plot.background = element_rect(fill = "white"),
-    axis.line = element_line(colour = "black"))
+    axis.line = element_line(colour = "black")
+  )
